@@ -1,34 +1,34 @@
-# sdd-skills
+# sdd-skills 🛠️
 
 スキル駆動開発のAgent Skills
 
-## 概要
+## 概要 📖
 
-### sdd-init-docs
+### sdd-init-docs 🏗️
 
 既存プロジェクトからSDD用のドキュメント（`docs/spec/`、`docs/adr/`）を一括初期生成するSkills。
 
-### sdd-design-concept
+### sdd-design-concept 🎨
 
 デザインコンセプトを明確にするためのSkills。
 
-### sdd-refinement-ado
+### sdd-refinement-ado 🎯
 
 Azure DevOpsのワークアイテムを明確にするためのSkills。
 
-### sdd-spec-ado
+### sdd-spec-ado 📐
 
 Azure DevOpsのワークアイテムを基に設計を行うSkills。
 
-### sdd-implement
+### sdd-implement 💻
 
 生成した設計を基に実装を行うSkills。
 
-### sdd-sync
+### sdd-sync 🔄
 
 ワンショットで実装したコードを設計に反映するSkills。
 
-## フォルダ構成
+## フォルダ構成 📁
 
 Skillsによって生成されるフォルダ構成例。
 
@@ -51,7 +51,7 @@ docs/
     ...
 ```
 
-## 依存Skills・MCP
+## 依存Skills・MCP 🔌
 - [grill-with-docs](https://github.com/mattpocock/skills/blob/main/docs/engineering/grill-with-docs.md)
 - [Azure DevOps MCP](https://github.com/microsoft/azure-devops-mcp)
 
@@ -59,7 +59,7 @@ docs/
 
 スキル駆動開発（SDD）において**「思考・設計（Plan）は上級モデル、実行（Run）は下級モデル」**の原則を適用し、トークン消費を劇的に抑えつつ開発精度を最大化するためのモデル使い分け戦略をまとめる。
 
-### 1. モデル配分ワークフロー
+### 1. モデル配分ワークフロー 🗺️
 
 上級モデル（High-tier: 推論・抽象化・対話）と下級モデル（Low-tier: 定型実行・コード生成・検証）の境界線を示したワークフロー。
 
@@ -85,7 +85,7 @@ flowchart TD
     Sync -.->|重大な意思決定 ADR起票の相談| Spec
 ```
 
-### 2. 各スキルの推奨モデル配分一覧
+### 2. 各スキルの推奨モデル配分一覧 📊
 
 | スキル名 | 推奨モデル | 頻度 | トークン節約の視点と理由 |
 | :--- | :---: | :---: | :--- |
@@ -96,7 +96,7 @@ flowchart TD
 | **`sdd-implement`** | **下級** ⚡ | **極高（日常）** | **最大のトークン削減ポイント！** `roadmap.md` に目的・ファイル・参照仕様・テストコマンドが明記されているため、下級モデルのコード生成＋テスト自己修復で十分回る。 |
 | **`sdd-sync`** | **下級〜中級** ⚡ | 高（日常） | Git diffから変更箇所（型・API・画面）を抽出し、既存ドキュメントのフォーマットにマッピングして追記する定型作業が主。下級モデルで十分こなせる。 |
 
-### 3. コスト削減を最大化する運用のコツ
+### 3. コスト削減を最大化する運用のコツ 💡
 
 > [!TIP]
 > **「下級モデルが迷わないロードマップ」を上級モデルに書かせる**
@@ -139,7 +139,7 @@ flowchart TD
     classDef low fill:#e6f7ff,stroke:#66b2ff,stroke-width:2px;
 ```
 
-#### パターン別おすすめ運用
+#### パターン別おすすめ運用 🎯
 
 | ステップの性質 | Plan（Step 1〜2） | Implement（Step 3〜6） | 運用の理由とメリット |
 | :--- | :---: | :---: | :--- |
@@ -166,7 +166,7 @@ flowchart TD
     Shortcut -.->|実装後に仕様とのズレがあれば| Sync["⚡ sdd-sync で差分吸収"]
 ```
 
-#### フルルート vs ショートカットルートの比較
+#### フルルート vs ショートカットルートの比較 🧭
 
 | 観点 | `sdd-spec-ado` を挟む（フルルート） 👑 | `sdd-spec-ado` をスキップ（ショートカット） ⚡ |
 | :--- | :--- | :--- |
