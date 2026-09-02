@@ -1,8 +1,8 @@
-# sdd-skills 🛠️
+# sdd-harness 🛠️
 
-スキル駆動開発のAgent Skills
+スキル駆動開発のハーネス
 
-## 概要 📖
+## Skills概要 📖
 
 ### sdd-init-docs 🏗️
 
