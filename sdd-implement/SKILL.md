@@ -1,16 +1,16 @@
 ---
-name: ado-implement
+name: sdd-implement
 description: >-
-  Implement features step-by-step based on development roadmaps created by ado-design or docs/roadmap.
+  Implement features step-by-step based on development roadmaps created by sdd-spec-ado or docs/roadmap.
   Takes into account docs/design/ (design concept, design tokens) if present to establish implementation plans.
   Follows a strict cycle: plan implementation (without modifying project files), obtain user approval, execute implementation,
   perform code review and fix findings, run tests/verification commands, and update the roadmap checklist.
   Always trigger this skill whenever the user asks to implement, build, or develop a roadmap step, or mentions implementing from docs/roadmap.
 ---
 
-# Azure DevOps Roadmap Implementation (`ado-implement`)
+# Azure DevOps Roadmap Implementation (`sdd-implement`)
 
-`ado-refinement`（要件定義）および `ado-design`（設計・仕様策定・ロードマップ生成）によって作成された開発ロードマップ（`docs/roadmap/#{WorkItemId}.roadmap.md` や `docs/ROADMAP.md`）に基づき、計画・実装・レビュー・テスト・完了チェックを段階的に進める実装実行スキル。
+`sdd-refinement-ado`（要件定義）および `sdd-spec-ado`（設計・仕様策定・ロードマップ生成）によって作成された開発ロードマップ（`docs/roadmap/#{WorkItemId}.roadmap.md` や `docs/ROADMAP.md`）に基づき、計画・実装・レビュー・テスト・完了チェックを段階的に進める実装実行スキル。
 リポジトリ内に `docs/design/` フォルダが存在する場合は、記載されているデザインコンセプトやデザイントークンも前提として考慮し、世界観・トンマナ・UI原則に調和した実装計画の立案および実装・レビューを行う。
 
 ---

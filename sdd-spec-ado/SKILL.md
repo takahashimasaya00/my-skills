@@ -1,5 +1,5 @@
 ---
-name: ado-design
+name: sdd-spec-ado
 description: >-
   Design and flesh out Azure DevOps work items (PBI, Bug, Task) at an architectural and technical specification level using grill-with-docs.
   Takes into account docs/design/ (design concept, design tokens) if present, and generates or updates docs/spec (data-models, features, system-architecture), docs/adr, and docs/roadmap/#{No}.roadmap.md.
@@ -7,7 +7,7 @@ description: >-
   or creating a development roadmap for an Azure DevOps work item, PBI, Bug, or Task.
 ---
 
-# Azure DevOps Work Item Design (`ado-design`)
+# Azure DevOps Work Item Design (`sdd-spec-ado`)
 
 Azure DevOpsで管理されているワークアイテム（Product Backlog Item, Bug, Task）を取得し、`grill-with-docs` のアプローチで**実装を考慮した設計レベル（アーキテクチャ・データモデル・機能仕様）**を徹底的につき詰め（Grilling）、合意された内容をリポジトリ内の `docs/`（spec, adr, roadmap、必要に応じてdesign）へ体系的に反映するスキル。
 リポジトリ内に `docs/design/` フォルダが存在する場合は、記載されているデザインコンセプトやデザイントークンも前提として考慮し、UI仕様やステート設計をつき詰める。

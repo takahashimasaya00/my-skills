@@ -1,5 +1,5 @@
 ﻿---
-name: design-concept
+name: sdd-design-concept
 description: >-
   Define and sharpen Web application design concepts, visual themes, UI/UX philosophy, and design tokens using grilling.
   Researches existing docs/design before interviewing, conducts a relentless round-based design tree grilling with recommended answers,
@@ -8,7 +8,7 @@ description: >-
   tone & manner, UI/UX concept, design system, design tokens, or asks to define guidelines in docs/design.
 ---
 
-# Web Application Design Concept (`design-concept`)
+# Web Application Design Concept (`sdd-design-concept`)
 
 Webアプリケーションの**デザインコンセプト、UI/UX思想、トーン＆マナー、デザイントークン**を、`grilling` のアプローチで徹底的に深掘り・合意形成し、リポジトリの `docs/design/` ディレクトリ配下に体系的なドキュメント（`concept.md`, `tokens.md` 等）として出力・更新するスキル。
 
@@ -26,7 +26,7 @@ Webアプリケーションの**デザインコンセプト、UI/UX思想、ト�
   - インタラクション＆アニメーション原則（マイクロインタラクション、トランジションの心地よさ）
   - プロジェクトの技術スタック（Tailwind CSS, SCSS, Vanilla CSS等）に即した実装用トークン定義
 - **対象外（個別画面の実装コード）**:
-  - 特定の画面の個別HTML/テンプレートタグの全書き出しなどは、ロードマップに基づく実装フェーズ（`ado-implement` 等）で担当する。
+  - 特定の画面の個別HTML/テンプレートタグの全書き出しなどは、ロードマップに基づく実装フェーズ（`sdd-implement` 等）で担当する。
 
 ---
 

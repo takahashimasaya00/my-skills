@@ -4,9 +4,13 @@
 
 ## 概要
 
-### sdd-ui-concept
+### sdd-init-docs
 
-UIコンセプトを明確にするためのSkills。
+既存プロジェクトからSDD用のドキュメント（`docs/spec/`、`docs/adr/`）を一括初期生成するSkills。
+
+### sdd-design-concept
+
+デザインコンセプトを明確にするためのSkills。
 
 ### sdd-refinement-ado
 
