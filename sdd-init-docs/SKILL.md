@@ -1,18 +1,18 @@
 ---
-name: init-docs
+name: sdd-init-docs
 description: >-
   Reverse-engineer existing codebases to initialize and scaffold the SDD (Skill-Driven Development) documentation suite.
   Inspects the project structure, dependencies, data models, APIs, and UI features, confirms business domain context via 1-round grilling,
   and generates docs/spec/ (system-architecture.md, data-models.md, features.md) along with the initial architecture decision record (docs/adr/0001-technology-stack.md).
   Always trigger this skill whenever the user asks to generate docs from an existing project, reverse-engineer specifications from code,
-  onboard an existing codebase to SDD, or mentions 'init-docs', 'reverse-docs', or 'sdd-init-docs'.
+  onboard an existing codebase to SDD, or mentions 'sdd-init-docs', 'init-docs', or 'reverse-docs'.
 ---
 
-# SDD Initial Documentation Generation (`init-docs`)
+# SDD Initial Documentation Generation (`sdd-init-docs`)
 
 既存のプロジェクトコードベースを解析し、**スキル駆動開発（Skill-Driven Development: SDD）**のドキュメント基盤（`docs/spec/` および初期 `docs/adr/`）を一括初期生成（スキャフォールディング）するスキル。
 
-既存のブラウンフィールド開発プロジェクトにSDDを新規導入し、以降の設計（`sdd-spec-ado`）、実装（`sdd-implement`）、UI設計（`sdd-design-concept`）、差分同期（`code-to-docs`）へとスムーズにつなげるための起点となる。
+既存のブラウンフィールド開発プロジェクトにSDDを新規導入し、以降の設計（`sdd-spec-ado`）、実装（`sdd-implement`）、UI設計（`sdd-design-concept`）、差分同期（`sdd-sync`）へとスムーズにつなげるための起点となる。
 
 ---
 
@@ -41,7 +41,7 @@ description: >-
 | **`docs/adr/0001-technology-stack.md`** | プロジェクトで採用されている技術スタック（言語、FW、DB、通信方式等）のベースライン記録 |
 
 > [!NOTE]
-> `docs/design/`（デザインコンセプトやトークン）は思想や世界観の対話が必要なため、本スキルでは自動生成しません。UIコンセプトを定義したい場合は、ドキュメント生成後に `sdd-design-concept`（`sdd-design-concept`）を実行してください。
+> `docs/design/`（デザインコンセプトやトークン）は思想や世界観の対話が必要なため、本スキルでは自動生成しません。UIコンセプトを定義したい場合は、ドキュメント生成後に `sdd-design-concept` を実行してください。
 
 ---
 
@@ -163,11 +163,11 @@ Step 2 の調査結果をもとに、プロジェクトの「ビジネス目的�
 
 ### 🚀 次のおすすめアクション
 1. **UI/UXコンセプトの策定**:
-   - Webアプリのデザイン哲学やデザイントークンを定義したい場合は、`sdd-design-concept`（`sdd-design-concept`）を実行してください。
+   - Webアプリのデザイン哲学やデザイントークンを定義したい場合は、`sdd-design-concept` を実行してください。
 2. **Azure DevOps での要件定義・設計**:
    - 新規機能追加やPBIの設計を行う場合は、`sdd-refinement-ado` や `sdd-spec-ado` を実行してください。
 3. **日常のコード先行開発の同期**:
-   - プロトタイプやホットフィックス等のコード変更があった場合は、`code-to-docs`（`sdd-sync`）で差分同期を行えます。
+   - プロトタイプやホットフィックス等のコード変更があった場合は、`sdd-sync` で差分同期を行えます。
 ```
 
 ---
