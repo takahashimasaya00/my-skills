@@ -36,7 +36,6 @@ Skillsによって生成されるフォルダ構成例。
 docs/
   proposals/
     pbi-123.md (設計草案/Blueprint)
-    archive/
   spec/
     features.md
     data-models.md

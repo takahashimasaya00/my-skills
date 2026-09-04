@@ -107,7 +107,7 @@ description: >-
    - `docs/proposals/pbi-<ID>.md` で定義された、今回の Task 用の仕様パッチ（Blueprintのスライス）を、リポジトリの `docs/spec/` 本体に適用（マージ）する。
    - 他の PBI 作業によって `docs/spec/` が変更されており、単純なパッチ適用ができない場合は、最新の `docs/spec/` に合わせてパッチの内容を調整（リベース）してから反映する。
 2. **草案のクリーンアップ（全Task完了時）**:
-   - もし今回の Task がその PBI における最後の Task であった場合、用済みとなった `docs/proposals/pbi-<ID>.md` ファイルを削除（または `docs/proposals/archive/` フォルダへ移動）し、コンテキストの肥大化を防ぐ。
+   - もし今回の Task がその PBI における最後の Task であった場合、用済みとなった `docs/proposals/pbi-<ID>.md` ファイルを削除し、コンテキストの肥大化を防ぐ。
 
 ---
 
