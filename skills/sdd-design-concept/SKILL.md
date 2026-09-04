@@ -1,4 +1,4 @@
-﻿---
+---
 name: sdd-design-concept
 description: >-
   Define and sharpen Web application design concepts, visual themes, UI/UX philosophy, and design tokens using grilling.
@@ -26,7 +26,7 @@ Webアプリケーションの**デザインコンセプト、UI/UX思想、ト�
   - インタラクション＆アニメーション原則（マイクロインタラクション、トランジションの心地よさ）
   - プロジェクトの技術スタック（Tailwind CSS, SCSS, Vanilla CSS等）に即した実装用トークン定義
 - **対象外（個別画面の実装コード）**:
-  - 特定の画面の個別HTML/テンプレートタグの全書き出しなどは、ロードマップに基づく実装フェーズ（`sdd-implement` 等）で担当する。
+  - 特定の画面の個別HTML/テンプレートタグの全書き出しなどは、ADO Taskに基づく実装フェーズ（`sdd-implement-ado` 等）で担当する。
 
 ---
 

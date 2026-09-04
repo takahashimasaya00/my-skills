@@ -5,4 +5,4 @@
 - `docs/spec/`: システム構成、データモデル、機能仕様（Single Source of Truth）
 - `docs/adr/`: アーキテクチャ上の決定背景・トレードオフ
 - `docs/design/`: UI/UX思想、デザイントークン
-- `docs/roadmap/`: 開発の進捗とロードマップ
+

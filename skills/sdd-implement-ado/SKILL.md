@@ -1,16 +1,16 @@
 ---
-name: sdd-implement
+name: sdd-implement-ado
 description: >-
-  Implement features step-by-step based on development roadmaps created by sdd-spec-ado or docs/roadmap.
+  Implement features step-by-step based on Azure DevOps Task items created by sdd-spec-ado.
   Takes into account docs/design/ (design concept, design tokens) if present to establish implementation plans.
   Follows a strict cycle: plan implementation (without modifying project files), obtain user approval, execute implementation,
-  perform code review and fix findings, run tests/verification commands, and update the roadmap checklist.
-  Always trigger this skill whenever the user asks to implement, build, or develop a roadmap step, or mentions implementing from docs/roadmap.
+  perform code review and fix findings, run tests/verification commands, and update the ADO Task status to Done.
+  Always trigger this skill whenever the user asks to implement, build, or develop a specific ADO Task.
 ---
 
-# Azure DevOps Roadmap Implementation (`sdd-implement`)
+# Azure DevOps Task Implementation (`sdd-implement-ado`)
 
-`sdd-refinement-ado`（要件定義）および `sdd-spec-ado`（設計・仕様策定・ロードマップ生成）によって作成された開発ロードマップ（`docs/roadmap/#{WorkItemId}.roadmap.md` や `docs/ROADMAP.md`）に基づき、計画・実装・レビュー・テスト・完了チェックを段階的に進める実装実行スキル。
+`sdd-spec-ado` 等によって起票された Azure DevOps の `Task` ワークアイテムの `Description` に記載された情報に基づき、計画・実装・レビュー・テスト・完了更新を段階的に進める実装実行スキル。
 リポジトリ内に `docs/design/` フォルダが存在する場合は、記載されているデザインコンセプトやデザイントークンも前提として考慮し、世界観・トンマナ・UI原則に調和した実装計画の立案および実装・レビューを行う。
 
 ---
@@ -27,26 +27,28 @@ description: >-
    - 実装後はコードレビューを実施し、見つかった指摘事項や改善点を速やかに修正する。（※デザイン整合性や特定観点の縛りは設けず、必要に応じて専門のレビュースキルとも連携可能とする）
 5. **テスト・検証コマンドの厳守 (Test & Verify)**:
    - ロードマップに定義された検証コマンド（`npm run test`, `npm run lint`, `npm run build` 等）を実行し、すべて成功（パス）させる。テストコードが存在する場合は必ずテストを実行する。
-6. **ロードマップ進捗の自動更新 (Progress Tracking)**:
-   - 検証まで完了したら、対象ロードマップの該当ステップのチェックボックスを `[ ]` から `[x]` に更新する。
+6. **タスク状態の自動更新 (Progress Tracking)**:
+   - 検証まで完了したら、対象の ADO Task の State を `Done`（完了）に更新する。
 
 ---
 
 ## ワークフロー手順
 
-### Step 1: ロードマップ・ステップの特定 & 実装計画の立案
+### Step 1: ADO Task の特定 & 実装計画の立案
 
-1. **対象ロードマップとステップの特定**:
-   - プロンプトから対象のロードマップ（例: `#123` -> `docs/roadmap/#123.roadmap.md`、または `docs/ROADMAP.md`）と、ステップ番号（例: `Step 1`）を特定する。
+1. **対象 Task の特定**:
+   - プロンプトから対象の ADO Task ID（例: `#456` または `456`）を特定する。
    - **未指定時の確認**:
-     - ロードマップやステップ番号が明示されていない場合は、勝手に推測して進めず、`docs/roadmap/` 配下のファイル一覧（または `docs/ROADMAP.md`）を調査した上で、ユーザーに「どのロードマップのどのステップを実装しますか？」と未完了ステップの一覧を提示して確認する。
+     - Task ID が明示されていない場合は、勝手に推測して進めず、ユーザーに「どの Task を実装しますか？ (Task ID を教えてください)」と確認する。
 
-2. **ロードマップ情報の読み込み**:
-   - 対象ステップに記載されている以下の情報を確認する：
-     - **目的**: ステップで達成すべきゴール
-     - **成果物**: 作成・変更対象のファイル一覧
-     - **参照コンテキスト**: 仕様書（`docs/spec/system-architecture.md`, `docs/spec/data-models.md`, `docs/spec/features.md`）、該当ADR（`docs/adr/`）、`CONTEXT.md`、およびデザイン仕様（`docs/design/concept.md`, `docs/design/tokens.md`）
+2. **Task 情報の取得**:
+   - ADO MCP の `wit_work_item` ツールを使用して、指定された Task ID の詳細を取得する。
+   - `System.Description` フィールドの内容を読み込み、以下の情報を確認する：
+     - **目的**: Task で達成すべきゴール
+     - **成果物**: 作成・変更対象の想定ファイル
+     - **参照コンテキスト**: 仕様書（`docs/spec/...`）、該当ADR、`CONTEXT.md`、およびデザイン仕様へのリンク
      - **検証コマンド**: ビルド、テスト、Lint コマンド
+     - 💬 **プロンプト指示例**: 実装時の注意事項
 
 3. **参照ドキュメント・コードの調査**:
    - 「参照コンテキスト」に記載された仕様書やADRを熟読し、該当箇所の型定義、API仕様、アーキテクチャ境界を正確に把握する。
@@ -100,19 +102,15 @@ description: >-
 
 ---
 
-### Step 5: テスト・検証 & ロードマップの更新
+### Step 5: テスト・検証 & ADO Task の状態更新
 
 1. **テスト・検証コマンドの実行**:
-   - ロードマップに指定されている「検証コマンド」（例: `npm run test`, `npm run lint`, `npm run build` 等）を実行する。
+   - Task の Description に指定されている「検証コマンド」を実行する。
    - テストコードが実装されている場合は、必ずテストを実行してグリーン（成功）になることを確認する。
    - テストやビルド・Lintでエラーが出た場合は、原因を特定して修正し、すべての検証が成功するまで繰り返す。
 
-2. **ロードマップのチェックボックス更新**:
-   - すべての検証が成功したら、対象ロードマップファイル（`docs/roadmap/#{WorkItemId}.roadmap.md` または `docs/ROADMAP.md`）の該当ステップのチェックボックスを更新する。
-     ```markdown
-     - [ ] Step N: <タイトル>
-     + [x] Step N: <タイトル>
-     ```
+2. **ADO Task の State 更新**:
+   - すべての検証が成功したら、ADO MCP の `wit_work_item_write` ツールを使用して、対象 Task の `System.State` フィールドを `Done` (または完了状態) に更新する。
 
 3. **完了報告**:
    - 以下の内容をユーザーに報告する：
@@ -120,5 +118,5 @@ description: >-
      - デザインコンセプト・トークンの適用内容（UIステップの場合）
      - コードレビューで発見・修正した内容
      - 実行したテスト・検証コマンドとその結果
-     - ロードマップの更新（`[x]`）完了通知
+     - ADO Task の `Done` への更新完了通知
      - （次ステップが存在する場合）次のステップの概要案内

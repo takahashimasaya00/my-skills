@@ -2,14 +2,14 @@
 name: sdd-spec-ado
 description: >-
   Design and flesh out Azure DevOps work items (PBI, Bug, Task) at an architectural and technical specification level using grill-with-docs.
-  Takes into account docs/design/ (design concept, design tokens) if present, and generates or updates docs/spec (data-models, features, system-architecture), docs/adr, and docs/roadmap/#{No}.roadmap.md.
+  Takes into account docs/design/ (design concept, design tokens) if present, and generates or updates docs/spec (data-models, features, system-architecture), docs/adr, and outputs implementation steps as child Task work items in Azure DevOps.
   Always trigger this skill whenever the user mentions designing, architectural refinement, technical specification,
-  or creating a development roadmap for an Azure DevOps work item, PBI, Bug, or Task.
+  or creating development tasks/roadmaps for an Azure DevOps work item, PBI, Bug, or Task.
 ---
 
 # Azure DevOps Work Item Design (`sdd-spec-ado`)
 
-Azure DevOpsで管理されているワークアイテム（Product Backlog Item, Bug, Task）を取得し、`grill-with-docs` のアプローチで**実装を考慮した設計レベル（アーキテクチャ・データモデル・機能仕様）**を徹底的につき詰め（Grilling）、合意された内容をリポジトリ内の `docs/`（spec, adr, roadmap、必要に応じてdesign）へ体系的に反映するスキル。
+Azure DevOpsで管理されているワークアイテム（Product Backlog Item, Bug, Task）を取得し、`grill-with-docs` のアプローチで**実装を考慮した設計レベル（アーキテクチャ・データモデル・機能仕様）**を徹底的につき詰め（Grilling）、合意された内容をリポジトリ内の `docs/`（spec, adr、必要に応じてdesign）へ体系的に反映し、具体的な実装ステップをADOの子Taskとして起票するスキル。
 リポジトリ内に `docs/design/` フォルダが存在する場合は、記載されているデザインコンセプトやデザイントークンも前提として考慮し、UI仕様やステート設計をつき詰める。
 
 ---
@@ -23,9 +23,9 @@ Azure DevOpsで管理されているワークアイテム（Product Backlog Item
   - 全体機能マップの更新、UIステート（Loading / Success / Empty / Error）と画面フロー（`docs/design/` がある場合はそのデザインコンセプト・トークンを前提とする）
   - トレードオフを伴う技術決定（ADR起票の3条件に合致するもの）
   - 異常系、セキュリティ、エラーハンドリング、非機能要件
-  - 段階的な実装ステップ（ロードマップ）
+  - 段階的な実装ステップ（ADO Taskの起票）
 - **対象外（実装詳細 - Micro Coding Details）**:
-  - クラス内部の個別メソッド実装コード、ローカル変数名、詳細なCSSプロパティ値など。これらはロードマップに基づく実装フェーズで決定する。
+  - クラス内部の個別メソッド実装コード、ローカル変数名、詳細なCSSプロパティ値など。これらはADO Taskに基づく実装フェーズで決定する。
 - 詳細は [design-guidelines.md](./references/design-guidelines.md) を参照。
 
 ---
@@ -118,20 +118,22 @@ Azure DevOpsで管理されているワークアイテム（Product Backlog Item
 
 ---
 
-### Step 4: ワークアイテム個別ロードマップの作成 (`docs/roadmap/`)
+### Step 4: 実装ステップの ADO Task 起票
 
-1. `docs/roadmap/` ディレクトリが存在しない場合は作成する。
-2. ファイル名を `docs/roadmap/#{WorkItemId}.roadmap.md`（例: `#123.roadmap.md`）として作成する。
-3. テンプレート（[roadmap-template.md](./references/roadmap-template.md)）に従い、以下の内容を含める：
-   - ワークアイテムの概要（ID、種別、タイトル、参照コンテキスト）
-     - `docs/design/` が存在する場合は、関連ドキュメントに `docs/design/concept.md`, `docs/design/tokens.md` も含める。
-   - 実装ステップ一覧（Step 1, Step 2, ...）：
-     - チェックボックス `[ ] Step N: <タイトル>`
-     - **目的**
-     - **成果物** (変更・新規作成するファイルパス一覧)
-     - **参照コンテキスト** (該当する `docs/spec/...`, `docs/adr/...`, UIステップなら `docs/design/...`)
-     - **検証コマンド** (`npm run test`, `npm run lint`, `npm run build` 等)
-     - 💬 **プロンプト指示例** (AIに実装を依頼する際の具体的なプロンプト。UI実装ステップでは「`docs/design/` のデザインコンセプトやトークンに準拠して実装してください」という指示を含める)
-   - 完了の定義 (Definition of Done)
+設計合意内容に基づき、対象のワークアイテム（PBIなど）の子アイテムとして、具体的な実装ステップを `Task` ワークアイテムとして ADO 上に作成する。
 
-4. 作成後、更新・作成した全ファイルの一覧とリンクをユーザーに報告する。
+1. **Taskの切り出し**:
+   - フロントエンド、バックエンド、データベース設定など、論理的でアサイン可能な粒度でTaskを定義する。
+2. **`wit_work_item_write` を用いた起票**:
+   - 各Taskに対して、`wit_work_item_write` ツールを使用してアイテムを作成する。
+   - `action` を `create` とし、`type` を `Task` と設定する。
+   - `parentId` に Step 1 で取得した親ワークアイテムの ID を指定する。
+3. **Task Description（詳細）の記述ルール**:
+   - `System.Description` フィールドには HTML (または ADO が解釈可能な形式) を用いて、以下の情報を必ず含めること。
+     - **目的**: Taskで達成すべきゴール
+     - **成果物**: 作成・変更対象の想定ファイル
+     - **参照コンテキスト**: 関連する仕様書（`docs/spec/system-architecture.md` 等）、該当ADR、デザイン仕様へのリンク
+     - **検証コマンド**: ビルド、テスト、Lint コマンド（`npm run test` 等）
+     - 💬 **プロンプト指示例**: 後続の `sdd-implement-ado` が参照するための実装指示（例：「`docs/design/` のデザインコンセプトやトークンに準拠して実装してください」）
+
+4. 作成後、起票したすべての Task の ID とタイトル、ならびに更新・作成した `docs/` 配下のファイル一覧をユーザーに報告する。

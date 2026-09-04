@@ -12,7 +12,7 @@ description: >-
 
 既存のプロジェクトコードベースを解析し、**スキル駆動開発（Skill-Driven Development: SDD）**のドキュメント基盤（`docs/spec/` および初期 `docs/adr/`）を一括初期生成（スキャフォールディング）するスキル。
 
-既存のブラウンフィールド開発プロジェクトにSDDを新規導入し、以降の設計（`sdd-spec-ado`）、実装（`sdd-implement`）、UI設計（`sdd-design-concept`）、差分同期（`sdd-sync`）へとスムーズにつなげるための起点となる。
+既存のブラウンフィールド開発プロジェクトにSDDを新規導入し、以降の設計（`sdd-spec-ado`）、実装（`sdd-implement-ado`）、UI設計（`sdd-design-concept`）、差分同期（`sdd-sync`）へとスムーズにつなげるための起点となる。
 
 ---
 
