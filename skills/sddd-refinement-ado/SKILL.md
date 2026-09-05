@@ -1,12 +1,12 @@
-﻿---
-name: sdd-refinement-ado
+---
+name: sddd-refinement-ado
 description: >-
   Refine and clarify Azure DevOps work items (Feature, Product Backlog Item, User Story, Bug) using a Scrum-focused grilling interview.
   Always trigger this skill whenever the user mentions refining, fleshing out, clarifying, grilling, or detailing an Azure DevOps item,
   PBI, Feature, or Bug, or asks to prepare requirements and acceptance criteria before sprint planning.
 ---
 
-# Azure DevOps Item Refinement (`sdd-refinement-ado`)
+# Azure DevOps Item Refinement (`sddd-refinement-ado`)
 
 Azure DevOpsで管理されているアイテム（Feature, PBI / User Story, Bug）を取得し、スクラム開発における **Definition of Ready (DoR)** を満たすレベルまで要件と受入基準を徹底的につき詰め（Grilling）、合意形成後にAzure DevOpsへ自動反映するスキル。
 

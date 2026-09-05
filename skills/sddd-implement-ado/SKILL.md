@@ -1,16 +1,16 @@
 ---
-name: sdd-implement-ado
+name: sddd-implement-ado
 description: >-
-  Implement features step-by-step based on Azure DevOps Task items created by sdd-spec-ado.
+  Implement features step-by-step based on Azure DevOps Task items created by sddd-spec-ado.
   Takes into account docs/design/ (design concept, design tokens) if present to establish implementation plans.
   Follows a strict cycle: plan implementation (without modifying project files), obtain user approval, execute implementation,
   perform code review and fix findings, run tests/verification commands, and update the ADO Task status to Done.
   Always trigger this skill whenever the user asks to implement, build, or develop a specific ADO Task.
 ---
 
-# Azure DevOps Task Implementation (`sdd-implement-ado`)
+# Azure DevOps Task Implementation (`sddd-implement-ado`)
 
-`sdd-spec-ado` 等によって起票された Azure DevOps の `Task` ワークアイテムの `Description` に記載された情報に基づき、計画・実装・レビュー・テスト・完了更新を段階的に進める実装実行スキル。
+`sddd-spec-ado` 等によって起票された Azure DevOps の `Task` ワークアイテムの `Description` に記載された情報に基づき、計画・実装・レビュー・テスト・完了更新を段階的に進める実装実行スキル。
 リポジトリ内に `docs/design/` フォルダが存在する場合は、記載されているデザインコンセプトやデザイントークンも前提として考慮し、世界観・トンマナ・UI原則に調和した実装計画の立案および実装・レビューを行う。
 
 ---

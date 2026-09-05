@@ -1,9 +1,9 @@
 ---
-name: sdd-sync
-description: Reverse-sync and reflect code changes (e.g., from one-shot implementations, prototypes, hotfixes, or refactoring) back into documentation (docs/spec/, docs/adr/). Use whenever the user asks to sync code to docs, reflect implementation into specifications, reverse-engineer specs from code, update docs/spec or docs/adr after coding, or mentions 'sdd-sync', 'code-to-docs', 'doc-sync', or doc synchronization.
+name: sddd-sync
+description: Reverse-sync and reflect code changes (e.g., from one-shot implementations, prototypes, hotfixes, or refactoring) back into documentation (docs/spec/, docs/adr/). Use whenever the user asks to sync code to docs, reflect implementation into specifications, reverse-engineer specs from code, update docs/spec or docs/adr after coding, or mentions 'sddd-sync', 'code-to-docs', 'doc-sync', or doc synchronization.
 ---
 
-# Code-to-Documentation Reverse Sync (`sdd-sync`)
+# Code-to-Documentation Reverse Sync (`sddd-sync`)
 
 ワンショット実装、プロトタイプ作成、手動リファクタリングなどによって先行して変更されたコードベースから、仕様書 (`docs/spec/`) および設計決定記録 (`docs/adr/`) へ変更内容を逆同期（リバース生成・反映）するためのスキル。
 
