@@ -21,6 +21,9 @@ Azure DevOpsで管理されているアイテム（Feature, PBI / User Story, Bu
   - Featureの場合はPBIへの分割案
 - **対象外（How - 実装詳細）**:
   - クラス設計、関数・変数名、物理DBスキーマ、特定APIの内部ロジックなど。これらはスプリント中に開発者がタスク化する領域のため、本スキルでは扱わない。
+- **ユーザー承認駆動のADO反映 (Human-in-the-Loop)**:
+  - 要件や受入基準を精緻化した後、**Azure DevOps（アイテム更新や子PBI起票）へ反映する前に、必ず更新内容のプレビューを提示してユーザーから明示的な承諾（LGTM）を得る**。
+  - ユーザーからの明示的な承諾を得るまで、勝手にADOの更新・作成ツール（`wit_work_item_write`）を実行してはならない。
 - 詳細は [scrum-guidelines.md](./references/scrum-guidelines.md) を参照。
 
 ---
@@ -86,13 +89,13 @@ Azure DevOpsで管理されているアイテム（Feature, PBI / User Story, Bu
 
 ---
 
-### Step 3: 精緻化仕様（Refined Spec）の提示 & 承認
+### Step 3: 精緻化仕様の提示 & ユーザー確認・承認 (LGTM)
 
-Grillingで合意した内容を整理し、ユーザーに承認（LGTM）を求める。
+Grillingで合意した内容を整理し、**Azure DevOpsへ反映する前に必ず更新内容のプレビューを提示してユーザーに承認（LGTM）を求める**。
 
 #### 提示フォーマット例 (PBIの場合)
 ```markdown
-# 📋 [Refined PBI] #<ID> <タイトル>
+# 📋 [Refined PBI プレビュー] #<ID> <タイトル>
 
 ### ユーザーストーリー
 - **As a**: <ユーザー種別>
@@ -110,11 +113,16 @@ Grillingで合意した内容を整理し、ユーザーに承認（LGTM）を�
 
 ※ Featureの場合は、上記に加えて **「分割PBI一覧（タイトル・概要・受入基準ドラフト）」** を提示する。
 
+#### ユーザー確認の必須ルール
+1. プレビューを提示し、ユーザーに確認とフィードバックを求める。
+2. **重要制約**: ユーザーから明示的な承諾（「OK」「反映して」「LGTM」など）を得るまで、**絶対にStep 4（ADOへの反映）には進まないこと**。
+3. ユーザーから修正要望や追加指示があった場合は、Grillingに戻るか仕様を調整して再度確認を得る。
+
 ---
 
-### Step 4: Azure DevOps への自動反映
+### Step 4: ユーザー承認後の Azure DevOps への反映
 
-ユーザーから承認（LGTM）を得たら、Azure DevOps MCP を呼び出して反映する。
+**Step 3でユーザーから明示的な承認（LGTM）を得た後のみ**、Azure DevOps MCP を呼び出して反映する。
 詳細なパラメータ仕様は [ado-field-mappings.md](./references/ado-field-mappings.md) を参照。
 
 #### 1. 対象アイテムの更新
