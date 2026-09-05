@@ -1,15 +1,15 @@
 ---
 name: sddd-spec-ado
 description: >-
-  Design and flesh out Azure DevOps work items (PBI, Bug, Task) at an architectural and technical specification level using grill-with-docs.
+  Design and flesh out Azure DevOps work items (PBI, Bug) at an architectural and technical specification level using grill-with-docs.
   Takes into account docs/design/ (design concept, design tokens) if present, and generates or updates docs/spec (data-models, features, system-architecture), docs/adr, and outputs implementation steps as child Task work items in Azure DevOps.
   Always trigger this skill whenever the user mentions designing, architectural refinement, technical specification,
-  or creating development tasks/roadmaps for an Azure DevOps work item, PBI, Bug, or Task.
+  or creating development tasks/roadmaps for an Azure DevOps work item, PBI, Bug.
 ---
 
 # Azure DevOps Work Item Design (`sddd-spec-ado`)
 
-Azure DevOpsで管理されているワークアイテム（Product Backlog Item, Bug, Task）を取得し、`grill-with-docs` のアプローチで**実装を考慮した設計レベル（アーキテクチャ・データモデル・機能仕様）**を徹底的につき詰め（Grilling）、合意された内容をリポジトリ内の `docs/`（spec, adr、必要に応じてdesign）へ体系的に反映し、具体的な実装ステップをADOの子Taskとして起票するスキル。
+Azure DevOpsで管理されているワークアイテム（Product Backlog Item, Bug）を取得し、`grill-with-docs` のアプローチで**実装を考慮した設計レベル（アーキテクチャ・データモデル・機能仕様）**を徹底的につき詰め（Grilling）、合意された内容をリポジトリ内の `docs/`（spec, adr、必要に応じてdesign）へ体系的に反映し、具体的な実装ステップをADOの子Taskとして起票するスキル。
 リポジトリ内に `docs/design/` フォルダが存在する場合は、記載されているデザインコンセプトやデザイントークンも前提として考慮し、UI仕様やステート設計をつき詰める。
 
 ---
@@ -44,7 +44,7 @@ Azure DevOpsで管理されているワークアイテム（Product Backlog Item
    }
    ```
 3. 取得した情報から以下を把握する：
-   - `System.WorkItemType`: 種別 (`Product Backlog Item`, `Bug`, `Task` 等)
+   - `System.WorkItemType`: 種別 (`Product Backlog Item`, `Bug` 等)
    - `System.Title`: タイトル
    - `System.Description`: 要件・概要
    - `Microsoft.VSTS.Common.AcceptanceCriteria`: 受入基準 (PBIの場合)
@@ -101,7 +101,7 @@ Azure DevOpsで管理されているワークアイテム（Product Backlog Item
 草案（Blueprint）ファイルには以下を含める：
 - **PBIの目的と概要**
 - **全体設計の差分**: `docs/spec/` (data-models.md, features.md, system-architecture.md) や `CONTEXT.md` に追加・変更すべき内容の**完成形**。
-- **Taskへのスライス（分割割り当て）**: 後続の実装エージェントが迷わないよう、「Task 1完了時にはこの部分を `docs/spec/data-models.md` にマージする」「Task 2完了時にはこの部分を `features.md` にマージする」といった具体的な適用パッチ（差分）を、Taskごとにセクションを分けて明確に記載する。
+- **Taskへのスライス（分割割り当て）**: 後続の実装エージェントが迷わないよう、「Step 1完了時にはこの部分を `docs/spec/data-models.md` にマージする」「Step 2完了時にはこの部分を `features.md` にマージする」といった具体的な適用パッチ（差分）を、Stepごとにセクションを分けて明確に記載する。
 
 #### 2. ADRの起票 (`docs/adr/`)
 - 設計Grillingの中で「不可逆性」「意外性」「明確なトレードオフ」を満たす重要な意思決定があった場合のみ新規起票する。
@@ -119,17 +119,21 @@ Azure DevOpsで管理されているワークアイテム（Product Backlog Item
 
 1. **Taskの切り出し**:
    - フロントエンド、バックエンド、データベース設定など、論理的でアサイン可能な粒度でTaskを定義する。（Step 3のBlueprintのスライスと一致させること）
-2. **`wit_work_item_write` を用いた起票**:
+2. **Task名（Title）の命名規則**:
+   - `System.Title` は **`Step <番号>: <概要>`**（例: `Step 1: データモデル定義`, `Step 2: APIエンドポイント実装`）の形式にする。
+   - ⚠️ **重要**: 「Task 1」という表記は ADO Task 自身の Work Item ID（例: Task #1234）と混同しやすいため、タイトルには必ず **`Step <番号>`** を使用すること。
+3. **`wit_work_item_write` を用いた起票**:
    - 各Taskに対して、`wit_work_item_write` ツールを使用してアイテムを作成する。
    - `action` を `create` とし、`type` を `Task` と設定する。
    - `parentId` に Step 1 で取得した親ワークアイテムの ID を指定する。
-3. **Task Description（詳細）の記述ルール**:
+   - `title` に上記命名規則に沿ったタイトル（`Step <番号>: <概要>`）を指定する。
+4. **Task Description（詳細）の記述ルール**:
    - `System.Description` フィールドには、**長文のプロンプト指示や成果物リストを直接書き込まない**（ADOのUI肥大化防止）。
    - 代わりに、Step 3 で作成した草案ファイルへの参照を記載し、ADOをシンプルに保つ。
    - **記述例**:
      ```html
      <p><strong>目的</strong>: [Taskの簡単な目的]</p>
-     <p><strong>詳細および仕様反映パッチ</strong>: <code>docs/proposals/pbi-<ID>.md</code> の「Task X」のセクションを参照し、実装と仕様の同期（JIT同期）を行ってください。</p>
+     <p><strong>詳細および仕様反映パッチ</strong>: <code>docs/proposals/pbi-<ID>.md</code> の「Step X」のセクションを参照し、実装と仕様の同期（JIT同期）を行ってください。</p>
      ```
 
-4. 作成後、起票したすべての Task の ID とタイトル、ならびに作成した `docs/proposals/` ファイルのパスをユーザーに報告する。
+5. 作成後、起票したすべての Task の ID とタイトル、ならびに作成した `docs/proposals/` ファイルのパスをユーザーに報告する。
